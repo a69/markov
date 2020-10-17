@@ -10,10 +10,10 @@ func init() {
 	rand.Seed(time.Now().Unix())
 }
 
-func RandomAction(s State) (Action, error) {
+func RandomAction(t map[Action]float64) (Action, error) {
 	random := rand.Float64()
 	sum := 0.0
-	for action, prob := range s.GetProbability() {
+	for action, prob := range t {
 		if prob == 0 {
 			continue
 		}
