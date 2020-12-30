@@ -51,27 +51,23 @@ func Goto3(state markov.State) markov.State {
 }
 
 func TestMarkov(t *testing.T) {
-	m := markov.NewMarcov(map[markov.State]map[markov.Action]markov.TransitionFunc{
-		State1: map[markov.Action]markov.TransitionFunc{
-			Action1: Goto2,
-			Action2: Goto1,
-		},
-		State2: map[markov.Action]markov.TransitionFunc{
+	m := markov.NewMarcov(
+		map[markov.Action]markov.TransitionFunc{
 			Action1: Goto1,
 			Action2: Goto3,
 		},
-	},
 		map[markov.State]map[markov.Action]float64{
-			State1: map[markov.Action]float64{
+			State1: {
 				Action1: 0.5,
 				Action2: 0.5,
 			},
-			State2: map[markov.Action]float64{
+			State2: {
 				Action1: 0.5,
 				Action2: 0.5,
 			},
 		},
-		State1)
+		State1,
+	)
 	err := m.Lottery(markov.Context{Context: context.Background()})
 	if err != nil {
 		t.Error(err)

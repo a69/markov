@@ -7,13 +7,14 @@ type TransitionFunc func(state State) (newState State)
 type Markov struct {
 	State State
 	//StateTransitionTable
-	TransitionFuncs map[State]map[Action]TransitionFunc
+	TransitionFuncs map[Action]TransitionFunc
 
 	//StateTransitionProbabilityTable
 	Probabilities map[State]map[Action]float64
 }
 
-func NewMarcov(TransitionFuncs map[State]map[Action]TransitionFunc, Probabilities map[State]map[Action]float64, initState State) *Markov {
+//NewMarcov make new markov model
+func NewMarcov(TransitionFuncs map[Action]TransitionFunc, Probabilities map[State]map[Action]float64, initState State) *Markov {
 	return &Markov{
 		State:           initState,
 		TransitionFuncs: TransitionFuncs,
@@ -21,6 +22,7 @@ func NewMarcov(TransitionFuncs map[State]map[Action]TransitionFunc, Probabilitie
 	}
 }
 
+//Lottery run one time from initial state
 func (markov Markov) Lottery(c Context) error {
 	for {
 		select {
@@ -34,7 +36,7 @@ func (markov Markov) Lottery(c Context) error {
 			if err != nil {
 				return err
 			}
-			markov.State = markov.TransitionFuncs[markov.State][a](markov.State)
+			markov.State = markov.TransitionFuncs[a](markov.State)
 
 		}
 	}
