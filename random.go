@@ -10,6 +10,7 @@ func init() {
 	rand.Seed(time.Now().Unix())
 }
 
+//RandomAction chose action randomly
 func RandomAction(t map[Action]float64) (Action, error) {
 	random := rand.Float64()
 	sum := 0.0
