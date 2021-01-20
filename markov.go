@@ -23,7 +23,7 @@ func NewMarcov(TransitionFuncs map[Action]TransitionFunc, Probabilities map[Stat
 }
 
 //Lottery run one time from initial state
-func (markov Markov) Lottery(c Context) error {
+func (markov *Markov) Lottery(c Context) error {
 	for {
 		select {
 		case <-c.Done():
